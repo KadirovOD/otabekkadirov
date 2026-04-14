@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ro'yxatdan O'tish | 90 kun</title>
+    <!-- Google Fonts ishlatamiz, zamonaviy va toza ko'rinish uchun -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Oswald:wght@600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container register-page">
+        <!-- O'ng tomondagi ro'yxatdan o'tish formasi endi asosiy element -->
+        <main class="form-wrapper">
+            <form action="#" method="POST" id="registration-form">
+
+                <div class="form-group">
+                    <label for="name">ISMINGIZ</label>
+                    <input type="text" id="name" name="Ism" placeholder="ISMINGIZNI KIRITING" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="school">MAKTAB NOMI</label>
+                    <input type="text" id="school" name="Maktab" placeholder="MUASSASA NOMINI KIRITING" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">TELEFON RAQAMINGIZ</label>
+                    <!-- Type tel ishlatildi mobil qurilmalarda raqam klaviaturasi chiqishi uchun -->
+                    <input type="tel" id="phone" name="Telefon" placeholder="+998 -- --- -- --" required>
+                </div>
+
+                <div class="form-cta-wrapper">
+                    <!-- submit button o'rniga hozirgi holatda oddiy tugma ko'rinishi -->
+                    <button type="submit" id="submit-btn" class="btn-primary">RO'YXATDAN O'TISH</button>
+                    <p class="form-footer-text">SIZ BILAN ENG QISQA VAQTDA BOG'LANAMIZ</p>
+                    <span id="msg"
+                        style="display: block; text-align: center; margin-top: 10px; font-size: 14px; font-weight: 600;"></span>
+                </div>
+
+            </form>
+        </main>
+    </div>
+
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwv5OLIm6uqeL0hZIkCp5SYMbvYJZAoffLkLJJOlVFHsgvWkia00VUtVV7tryAbdTyUbA/exec';
+        const fileForm = document.getElementById('registration-form');
+        const msg = document.getElementById('msg');
+        const btn = document.getElementById('submit-btn');
+
+        fileForm.addEventListener('submit', e => {
+            e.preventDefault();
+            const originalBtnText = btn.innerText;
+            btn.innerText = "YUBORILMOQDA...";
+            btn.style.opacity = "0.7";
+            btn.style.cursor = "not-allowed";
+            btn.disabled = true;
+
+            fetch(scriptURL, {
+                method: 'POST',
+                body: new FormData(fileForm)
+            })
+                .then(response => {
+                    msg.innerText = "Ma'lumotlaringiz muvaffaqiyatli jo'natildi!";
+                    msg.style.color = "#01A750"; // Yashil rang - success
+                    btn.innerText = originalBtnText;
+                    btn.style.opacity = "1";
+                    btn.style.cursor = "pointer";
+                    btn.disabled = false;
+                    setTimeout(function () {
+                        msg.innerText = "";
+                    }, 5000);
+                    fileForm.reset();
+                })
+                .catch(error => {
+                    console.error('Xatolik!', error.message);
+                    msg.innerText = "Xatolik yuz berdi. Qayta urinib ko'ring.";
+                    msg.style.color = "red"; // Qizil rang - error
+                    btn.innerText = originalBtnText;
+                    btn.style.opacity = "1";
+                    btn.style.cursor = "pointer";
+                    btn.disabled = false;
+                });
+        });
+    </script>
+</body>
+
+</html>
