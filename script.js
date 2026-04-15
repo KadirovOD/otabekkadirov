@@ -3,9 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const ctaSection = document.getElementById("hidden-cta-section");
     
     if (ctaSection) {
-        // 1 daqiqa (millisekundlarda: 1 * 60 * 1000 = 60000)
-        // Dasturchilar uchun Eslatma: Dizaynni tekshirish uchun buni masalan 5000 (5 sekund) qilib o'zgartiring.
-        const delayInMilliseconds = 60000; 
+        // 5 sekunddan keyin chiqadigan qilindi
+        const delayInMilliseconds = 5000; 
         
         setTimeout(() => {
             // 'hidden' klassini olib tashlaymiz, shunda CSS dagi opacity va transform animatsiyasi ishga tushadi
